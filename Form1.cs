@@ -4,11 +4,13 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using MySql.Data.MySqlClient; //Referencia a Biblioteca MySQL
+using MySql.Data.MySqlClient;
+using Mysqlx.Prepare; //Referencia a Biblioteca MySQL
 
 namespace Formulário_CRUD
 {
@@ -38,6 +40,8 @@ namespace Formulário_CRUD
         {
             Application.Exit();
         }
+
+        //----------------------------------------------------------------------------------
 
         private void btnNovo_Click(object sender, EventArgs e)
         {
@@ -75,11 +79,140 @@ namespace Formulário_CRUD
                 txtTele.Text = null; //Limpa o TextBox txtTele
 
                 this.txtNome.Focus(); //Coloca o foco no TextBox txtNome. Explicação: Foco é a ação de selecionar um controle para que o usuário possa interagir com ele. Neste caso, o foco é colocado no TextBox txtNome para que o usuário possa digitar o nome do cliente.
+            }
+        }
 
+        //----------------------------------------------------------------------------------
+
+        private void btnConsultar_Click(object sender, EventArgs e)
+        {
+            //CODIGO BOTAO CONSULTAR
+
+            try
+            {
+                conexao = new MySqlConnection("Server=localhost;Database=db_cliente;Uid=root;Pwd=;");
+
+                sql = "SELECT * FROM CLIENTE WHERE CODIGO = @CODIGO";
+
+                comando = new MySqlCommand(sql, conexao);
+                comando.Parameters.AddWithValue("@CODIGO", txtCod.Text);
+                //comando.Parameters.AddWithValue("@NOME", txtNome.Text);
+                //comando.Parameters.AddWithValue("@TELEFONE", txtTele.Text);
+
+                conexao.Open();
+
+                dr = comando.ExecuteReader();
+
+                txtNome.Clear();
+                txtTele.Clear();
+
+                while (dr.Read())
+                {
+                    txtNome.Text = Convert.ToString(dr["NOME"]);
+                    txtTele.Text = Convert.ToString(dr["TELEFONE"]);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
 
             }
+        }
 
+        //----------------------------------------------------------------------------------
 
+        private void btnExcluir_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Digite o Código");
+            txtCod.Focus();
+            return;
+
+            try
+            {
+                MessageBox.Show("Tem certeza que deseja Excluir");
+                txtCod.Focus();
+
+                conexao = new MySqlConnection("Server=localhost;Database=db_cliente;Uid=root;Pwd=;");
+                sql = "DELETE FROM CLIENTE WHERE CODIGO = @CODIGO";
+
+                comando = new MySqlCommand(sql, conexao);
+
+                comando.Parameters.AddWithValue("@CODIGO", txtCod.Text);
+                //comando.Parameters.AddWithValue("@NOME", txtNome.Text);
+                //comando.Parameters.AddWithValue("@TELEFONE", txtTele.Text);
+
+                conexao.Open();
+
+                comando.ExecuteNonQuery();
+
+                MessageBox.Show("Cadastro Excluido!");
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        //----------------------------------------------------------------------------------
+
+        private void btnConsultarTodos_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                conexao = new MySqlConnection("Server=localhost;Database=db_cliente;Uid=root;Pwd=;");
+
+                sql = "SELECT * FROM CLIENTE";
+                da = new MySqlDataAdapter(sql, conexao);
+                DataTable dt = new DataTable();
+
+                da.Fill(dt);
+                dgvDados.DataSource = dt;
+
+                conexao.Open();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                conexao.Close();
+                conexao = null;
+            }
+        }
+
+        private void btnEditar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                conexao = new MySqlConnection("Server=localhost;Database=db_cliente;Uid=root;Pwd=;");
+                sql = "UPDATE CLIENTE SET NOME = @NOME, TELEFONE = @TELEFONE WHERE CODIGO = @CODIGO;";
+
+                comando = new MySqlCommand(sql, conexao);
+
+                comando.Parameters.AddWithValue("@CODIGO", txtCod.Text);
+                comando.Parameters.AddWithValue("@NOME", txtNome.Text);
+                comando.Parameters.AddWithValue("@TELEFONE", txtTele.Text);
+
+                conexao.Open();
+
+                comando.ExecuteNonQuery();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                MessageBox.Show("Edição Realizada com Sucesso!");
+                conexao.Close();
+                conexao = null;
+            }
 
         }
     }

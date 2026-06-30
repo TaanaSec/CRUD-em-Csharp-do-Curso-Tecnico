@@ -32,7 +32,7 @@
             this.btnConsultar = new System.Windows.Forms.Button();
             this.btnEditar = new System.Windows.Forms.Button();
             this.btnConsultarTodos = new System.Windows.Forms.Button();
-            this.btnExibir = new System.Windows.Forms.Button();
+            this.btnExcluir = new System.Windows.Forms.Button();
             this.btnSair = new System.Windows.Forms.Button();
             this.txtCod = new System.Windows.Forms.TextBox();
             this.txtNome = new System.Windows.Forms.TextBox();
@@ -40,8 +40,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.dgvDados = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvDados)).BeginInit();
             this.SuspendLayout();
             // 
             // btnNovo
@@ -72,6 +72,7 @@
             this.btnConsultar.TabIndex = 1;
             this.btnConsultar.Text = "Consultar";
             this.btnConsultar.UseVisualStyleBackColor = false;
+            this.btnConsultar.Click += new System.EventHandler(this.btnConsultar_Click);
             // 
             // btnEditar
             // 
@@ -86,6 +87,7 @@
             this.btnEditar.TabIndex = 2;
             this.btnEditar.Text = "Editar";
             this.btnEditar.UseVisualStyleBackColor = false;
+            this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
             // 
             // btnConsultarTodos
             // 
@@ -100,20 +102,22 @@
             this.btnConsultarTodos.TabIndex = 3;
             this.btnConsultarTodos.Text = "Consultar Todos";
             this.btnConsultarTodos.UseVisualStyleBackColor = false;
+            this.btnConsultarTodos.Click += new System.EventHandler(this.btnConsultarTodos_Click);
             // 
-            // btnExibir
+            // btnExcluir
             // 
-            this.btnExibir.BackColor = System.Drawing.Color.Black;
-            this.btnExibir.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnExibir.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnExibir.Font = new System.Drawing.Font("Segoe UI Variable Small Semibol", 11.25F, System.Drawing.FontStyle.Bold);
-            this.btnExibir.ForeColor = System.Drawing.Color.White;
-            this.btnExibir.Location = new System.Drawing.Point(284, 139);
-            this.btnExibir.Name = "btnExibir";
-            this.btnExibir.Size = new System.Drawing.Size(130, 30);
-            this.btnExibir.TabIndex = 4;
-            this.btnExibir.Text = "Exibir";
-            this.btnExibir.UseVisualStyleBackColor = false;
+            this.btnExcluir.BackColor = System.Drawing.Color.Black;
+            this.btnExcluir.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnExcluir.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnExcluir.Font = new System.Drawing.Font("Segoe UI Variable Small Semibol", 11.25F, System.Drawing.FontStyle.Bold);
+            this.btnExcluir.ForeColor = System.Drawing.Color.White;
+            this.btnExcluir.Location = new System.Drawing.Point(284, 139);
+            this.btnExcluir.Name = "btnExcluir";
+            this.btnExcluir.Size = new System.Drawing.Size(130, 30);
+            this.btnExcluir.TabIndex = 4;
+            this.btnExcluir.Text = "Excluir";
+            this.btnExcluir.UseVisualStyleBackColor = false;
+            this.btnExcluir.Click += new System.EventHandler(this.btnExcluir_Click);
             // 
             // btnSair
             // 
@@ -201,13 +205,13 @@
             this.label3.TabIndex = 11;
             this.label3.Text = "TELEFONE DO CLIENTE";
             // 
-            // dataGridView1
+            // dgvDados
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 220);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(402, 121);
-            this.dataGridView1.TabIndex = 12;
+            this.dgvDados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvDados.Location = new System.Drawing.Point(12, 220);
+            this.dgvDados.Name = "dgvDados";
+            this.dgvDados.Size = new System.Drawing.Size(402, 121);
+            this.dgvDados.TabIndex = 12;
             // 
             // Form1
             // 
@@ -215,7 +219,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
             this.ClientSize = new System.Drawing.Size(433, 353);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.dgvDados);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -223,7 +227,7 @@
             this.Controls.Add(this.txtNome);
             this.Controls.Add(this.txtCod);
             this.Controls.Add(this.btnSair);
-            this.Controls.Add(this.btnExibir);
+            this.Controls.Add(this.btnExcluir);
             this.Controls.Add(this.btnConsultarTodos);
             this.Controls.Add(this.btnEditar);
             this.Controls.Add(this.btnConsultar);
@@ -235,7 +239,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvDados)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -247,7 +251,7 @@
         private System.Windows.Forms.Button btnConsultar;
         private System.Windows.Forms.Button btnEditar;
         private System.Windows.Forms.Button btnConsultarTodos;
-        private System.Windows.Forms.Button btnExibir;
+        private System.Windows.Forms.Button btnExcluir;
         private System.Windows.Forms.Button btnSair;
         private System.Windows.Forms.TextBox txtCod;
         private System.Windows.Forms.TextBox txtNome;
@@ -255,7 +259,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgvDados;
     }
 }
 
